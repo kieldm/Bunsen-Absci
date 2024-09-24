@@ -6,10 +6,13 @@ let xCount, yCount;
 let xSpacer, ySpacer;
 let size = 8;
 
+let shield;
 let dots = [];
 
 function preload(){
   tFont = loadFont("resources/Inter-Regular.ttf");
+
+  shield = loadImage("resources/dotGrid_shield.png");
 }
 
 function setup(){
@@ -50,11 +53,13 @@ function draw() {
     dots[p].run();
   }
 
-  // fill(foreColor);
-  // noStroke();
-  // textSize(20);
-  // textFont(tFont)
-  // text(round(frameRate()), 50, height - 50);
+  image(shield, 0, 0);
+
+  fill(foreColor);
+  noStroke();
+  textSize(12);
+  textFont(tFont)
+  text("Framerate: " + round(frameRate()), 50, height - 50);
 }
 
 function mouseMoved(){

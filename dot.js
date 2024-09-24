@@ -49,7 +49,7 @@ class Dot {
       translate(this.x, this.y);
 
       fill(this.c);
-      ellipse(0, 0, size, size);
+      rect(0, 0, xSpacer, ySpacer);
     pop();
   }
 
