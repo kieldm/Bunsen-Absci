@@ -67,7 +67,8 @@ function draw() {
   noStroke();
   textSize(12);
   textFont(tFont)
-  text("Framerate: " + round(frameRate()), 50, height - 50);
+  text("FIND 5 Ys; Press any key to restart grid", 50, height - 50);
+  text("Framerate: " + round(frameRate()), 50, height - 25);
 }
 
 function generateRandom(){
