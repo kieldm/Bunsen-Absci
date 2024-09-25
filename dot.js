@@ -1,5 +1,8 @@
 class Dot {
-  constructor(x, y){
+  constructor(n, m, x, y){
+    this.n = n;
+    this.m = m;
+
     this.x = x;
     this.y = y;
 
@@ -13,6 +16,8 @@ class Dot {
 
     this.drawDist = spacer * 2;
     this.drawAmount = 20;
+
+    this.redDetect = false;
   }
 
   run(){
@@ -22,26 +27,43 @@ class Dot {
   }
 
   update(){
-    if(this.colorCulm < 1){
-      this.c = col[0];
-    } else if(this.colorCulm < 50){
-      var tk0 = map(this.colorCulm, 1, 50, 0, 1);
-      this.c = lerpColor(col[0], col[1], tk0);
-    } else if(this.colorCulm < 100){
-      var tk0 = map(this.colorCulm, 50, 100, 0, 1);
-      this.c = lerpColor(col[1], col[2], tk0);
-    } else if(this.colorCulm < 150){
-      var tk0 = map(this.colorCulm, 100, 150, 0, 1);
-      this.c = lerpColor(col[2], col[3], tk0);
+    if(this.redDetect){
+      if(this.colorCulm < 1){
+        this.c = col[0];
+      } else if(this.colorCulm < 50){
+        var tk0 = map(this.colorCulm, 1, 50, 0, 1);
+        this.c = lerpColor(col[0], col[1], tk0);
+      } else if(this.colorCulm < 100){
+        var tk0 = map(this.colorCulm, 50, 100, 0, 1);
+        this.c = lerpColor(col[1], col[2], tk0);
+      } else if(this.colorCulm < 150){
+        var tk0 = map(this.colorCulm, 100, 150, 0, 1);
+        this.c = lerpColor(col[2], col[3], tk0);
+      } else {
+        this.c = col[3];
+      }
+  
+      if(this.colorCulm > 150){
+        this.colorCulm -= this.decaySpeed;
+      } 
     } else {
-      this.c = col[3];
+      if(this.colorCulm < 1){
+        this.c = col[0];
+      } else if(this.colorCulm < 50){
+        var tk0 = map(this.colorCulm, 1, 50, 0, 1);
+        this.c = lerpColor(col[0], col[1], tk0);
+      } else if(this.colorCulm < 100){
+        var tk0 = map(this.colorCulm, 50, 100, 0, 1);
+        this.c = lerpColor(col[1], col[2], tk0);
+      } else {
+        this.c = col[2];
+      }
+  
+      if(this.colorCulm > 50){
+        this.colorCulm -= this.decaySpeed;
+      } 
     }
 
-    if(this.colorCulm > 0){
-      this.colorCulm -= this.decaySpeed;
-    } else {
-      this.colorCulm = 0;
-    }
   }
 
   display(){
@@ -49,6 +71,7 @@ class Dot {
       translate(this.x, this.y);
 
       fill(this.c);
+
       rect(0, 0, xSpacer, ySpacer);
     pop();
   }
@@ -97,5 +120,9 @@ class Dot {
         this.colorCulm += tk2;
       }
     }
+  }
+
+  keyPressedReset(){
+    this.colorCulm = 0;
   }
 }
