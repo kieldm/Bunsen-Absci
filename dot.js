@@ -18,6 +18,9 @@ class Dot {
     this.drawAmount = 20;
 
     this.redDetect = false;
+    this.greyDetect = false;
+    this.greyGradient = false;
+    this.greyValue = 0;
   }
 
   run(){
@@ -27,41 +30,41 @@ class Dot {
   }
 
   update(){
-    if(this.redDetect){
-      if(this.colorCulm < 1){
-        this.c = col[0];
-      } else if(this.colorCulm < 50){
-        var tk0 = map(this.colorCulm, 1, 50, 0, 1);
-        this.c = lerpColor(col[0], col[1], tk0);
-      } else if(this.colorCulm < 100){
-        var tk0 = map(this.colorCulm, 50, 100, 0, 1);
-        this.c = lerpColor(col[1], col[2], tk0);
-      } else if(this.colorCulm < 150){
-        var tk0 = map(this.colorCulm, 100, 150, 0, 1);
-        this.c = lerpColor(col[2], col[3], tk0);
-      } else {
-        this.c = col[3];
-      }
-  
+    if(this.colorCulm < 1){
+      this.c = col[0];
+    } else if(this.colorCulm < 50){
+      var tk0 = map(this.colorCulm, 1, 50, 0, 1);
+      this.c = lerpColor(col[0], col[1], tk0);
+    } else if(this.colorCulm < 100){
+      var tk0 = map(this.colorCulm, 50, 100, 0, 1);
+      this.c = lerpColor(col[1], col[2], tk0);
+    } else if(this.colorCulm < 150){
+      var tk0 = map(this.colorCulm, 100, 150, 0, 1);
+      this.c = lerpColor(col[2], col[3], tk0);
+    } else {
+      this.c = col[3];
+    }
+
+    if(this.redDetect){         ///////// TURN ON RED DETECT  
       if(this.colorCulm > 150){
         this.colorCulm -= this.decaySpeed;
-      } 
-    } else {
-      if(this.colorCulm < 1){
-        this.c = col[0];
-      } else if(this.colorCulm < 50){
-        var tk0 = map(this.colorCulm, 1, 50, 0, 1);
-        this.c = lerpColor(col[0], col[1], tk0);
-      } else if(this.colorCulm < 100){
-        var tk0 = map(this.colorCulm, 50, 100, 0, 1);
-        this.c = lerpColor(col[1], col[2], tk0);
-      } else {
-        this.c = col[2];
       }
-  
+
+    } else if(this.greyDetect){         ///////// TURN ON GREY DETECT
+      if(this.colorCulm > 100){
+        this.colorCulm -= this.decaySpeed;
+      }
+
+    } else if(this.greyGradient){         ///////// TURN ON Light GREY DETECT
+      if(this.colorCulm > this.greyValue){
+        this.colorCulm -= this.decaySpeed;
+      }
+
+    } else {                         ///////// TURN OFF  
       if(this.colorCulm > 50){
         this.colorCulm -= this.decaySpeed;
-      } 
+      }
+
     }
 
   }

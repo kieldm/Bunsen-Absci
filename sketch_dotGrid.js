@@ -67,8 +67,7 @@ function draw() {
   noStroke();
   textSize(12);
   textFont(tFont)
-  text("FIND 5 Ys; Press any key to restart grid", 50, height - 50);
-  text("Framerate: " + round(frameRate()), 50, height - 25);
+  text("Framerate: " + round(frameRate()), 50, height - 50);
 }
 
 function generateRandom(){
@@ -81,7 +80,7 @@ function generateRandom(){
     yRan[counter] = int(random(5, yCount - 5));
 
     for(var i = 0; i < counter; i++){
-      if(dist(xRan[counter], yRan[counter], xRan[i], yRan[i]) < 6){
+      if(dist(xRan[counter], yRan[counter], xRan[i], yRan[i]) < 10){
         makeIt = false;
       }
     }
@@ -89,16 +88,121 @@ function generateRandom(){
     if(makeIt){
       var thisM = yRan[counter];
       var thisN = xRan[counter]
+
+      var rs0 = random(9);
+
       dots[thisM][thisN].redDetect = true;
 
-      dots[thisM - 1][thisN - 1].redDetect = true;
-      dots[thisM - 1][thisN + 1].redDetect = true;
-      dots[thisM + 1][thisN].redDetect = true;
+      if(rs0 < 3){               //////////////////////// SMALL Y
+        var rad = 4;
+        for(var x = -rad; x <= rad; x ++){
+          var xAng = map(x, -rad, rad, 0, PI);
+          var yWin = round(sin(xAng) * rad);
+          for(var y = -yWin; y <= yWin; y++){
+            dots[thisM + y][thisN + x].greyGradient = true;
+            dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
+          }
 
-      if(random(10) < 5){
+        }
+
+        dots[thisM - 1][thisN - 1].redDetect = true;
+        dots[thisM - 1][thisN + 1].redDetect = true;
+        dots[thisM + 1][thisN].redDetect = true;
+
+      } else if(rs0 < 6){        //////////////////////// MED Y
+        var rad = 5;
+        for(var x = -rad; x <= rad; x ++){
+          var xAng = map(x, -rad, rad, 0, PI);
+          var yWin = round(sin(xAng) * rad);
+          for(var y = -yWin; y <= yWin; y++){
+            dots[thisM + y][thisN + x].greyGradient = true;
+            dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
+          }
+
+        }
+
+
         dots[thisM - 2][thisN - 2].redDetect = true;
+        dots[thisM - 1][thisN - 1].redDetect = true;
+        dots[thisM - 1][thisN + 1].redDetect = true;
         dots[thisM - 2][thisN + 2].redDetect = true;
+        dots[thisM + 1][thisN].redDetect = true;
         dots[thisM + 2][thisN].redDetect = true;
+
+        dots[thisM - 1][thisN].greyDetect = true;
+        dots[thisM - 2][thisN + 1].greyDetect = true;
+        dots[thisM - 3][thisN + 2].greyDetect = true;
+        dots[thisM - 2][thisN + 3].greyDetect = true;
+        dots[thisM - 1][thisN + 2].greyDetect = true;
+        dots[thisM][thisN + 1].greyDetect = true;
+        dots[thisM + 1][thisN + 1].greyDetect = true;
+        dots[thisM + 2][thisN + 1].greyDetect = true;
+        dots[thisM + 3][thisN].greyDetect = true;
+        dots[thisM + 2][thisN - 1].greyDetect = true;
+        dots[thisM + 1][thisN - 1].greyDetect = true;
+        dots[thisM][thisN - 1].greyDetect = true;
+        dots[thisM - 1][thisN - 2].greyDetect = true;
+        dots[thisM - 2][thisN - 3].greyDetect = true;
+        dots[thisM - 3][thisN - 2].greyDetect = true;
+        dots[thisM - 2][thisN - 1].greyDetect = true;
+
+      } else {                    //////////////////////// LARGE Y
+        var rad = 8;
+        for(var x = -rad; x <= rad; x ++){
+          var xAng = map(x, -rad, rad, 0, PI);
+          var yWin = round(sin(xAng) * rad);
+          for(var y = -yWin; y <= yWin; y++){
+            dots[thisM + y][thisN + x].greyGradient = true;
+            dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
+          }
+
+        }
+
+        dots[thisM - 1][thisN + 1].redDetect = true;
+        dots[thisM - 2][thisN + 2].redDetect = true;
+        dots[thisM - 3][thisN + 3].redDetect = true;
+        dots[thisM - 3][thisN + 4].redDetect = true;
+        dots[thisM - 2][thisN + 3].redDetect = true;
+        dots[thisM - 1][thisN + 2].redDetect = true;
+        dots[thisM][thisN + 1].redDetect = true;
+        dots[thisM + 1][thisN + 1].redDetect = true;
+        dots[thisM + 2][thisN + 1].redDetect = true;
+        dots[thisM + 3][thisN + 1].redDetect = true;
+        dots[thisM + 3][thisN].redDetect = true;
+        dots[thisM + 2][thisN].redDetect = true;
+        dots[thisM + 1][thisN].redDetect = true;
+        dots[thisM - 1][thisN - 1].redDetect = true;
+        dots[thisM - 2][thisN - 2].redDetect = true;
+        dots[thisM - 3][thisN - 3].redDetect = true;
+        dots[thisM - 3][thisN - 2].redDetect = true;
+        dots[thisM - 2][thisN - 1].redDetect = true;
+        dots[thisM - 1][thisN].redDetect = true;
+
+        dots[thisM - 2][thisN + 1].greyDetect = true;
+        dots[thisM - 3][thisN + 2].greyDetect = true;
+        dots[thisM - 4][thisN + 3].greyDetect = true;
+        dots[thisM - 4][thisN + 4].greyDetect = true;
+        dots[thisM - 3][thisN + 5].greyDetect = true;
+        dots[thisM - 2][thisN + 4].greyDetect = true;
+        dots[thisM - 1][thisN + 3].greyDetect = true;
+        dots[thisM][thisN + 2].greyDetect = true;
+        dots[thisM + 1][thisN + 2].greyDetect = true;
+        dots[thisM + 2][thisN + 2].greyDetect = true;
+        dots[thisM + 3][thisN + 2].greyDetect = true;
+        dots[thisM + 4][thisN + 1].greyDetect = true;
+        dots[thisM + 4][thisN].greyDetect = true;
+        dots[thisM + 3][thisN - 1].greyDetect = true;
+        dots[thisM + 2][thisN - 1].greyDetect = true;
+        dots[thisM + 1][thisN - 1].greyDetect = true;
+        dots[thisM][thisN - 1].greyDetect = true;
+        dots[thisM - 1][thisN - 2].greyDetect = true;
+        dots[thisM - 2][thisN - 3].greyDetect = true;
+        dots[thisM - 3][thisN - 4].greyDetect = true;
+        dots[thisM - 4][thisN - 3].greyDetect = true;
+        dots[thisM - 4][thisN - 2].greyDetect = true;
+        dots[thisM - 3][thisN - 1].greyDetect = true;
+        dots[thisM - 2][thisN].greyDetect = true;
+
       }
 
       counter ++;
@@ -127,6 +231,7 @@ function keyPressed(){
     for(var n = 0; n < xCount; n++){
       dots[m][n].keyPressedReset();
       dots[m][n].redDetect = false;
+      dots[m][n].greyDetect = false;
     }
   }
 
