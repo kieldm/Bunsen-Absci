@@ -89,28 +89,29 @@ function generateRandom(){
       var thisM = yRan[counter];
       var thisN = xRan[counter]
 
-      var rs0 = random(9);
+      var rs0 = random(10);
 
       dots[thisM][thisN].redDetect = true;
 
-      if(rs0 < 3){               //////////////////////// SMALL Y
-        var rad = 4;
-        for(var x = -rad; x <= rad; x ++){
-          var xAng = map(x, -rad, rad, 0, PI);
-          var yWin = round(sin(xAng) * rad);
-          for(var y = -yWin; y <= yWin; y++){
-            dots[thisM + y][thisN + x].greyGradient = true;
-            dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
-          }
+      // if(rs0 < 3){               //////////////////////// SMALL Y
+      //   var rad = 4;
+      //   for(var x = -rad; x <= rad; x ++){
+      //     var xAng = map(x, -rad, rad, 0, PI);
+      //     var yWin = round(sin(xAng) * rad);
+      //     for(var y = -yWin; y <= yWin; y++){
+      //       dots[thisM + y][thisN + x].greyGradient = true;
+      //       dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
+      //     }
 
-        }
+      //   }
 
-        dots[thisM - 1][thisN - 1].redDetect = true;
-        dots[thisM - 1][thisN + 1].redDetect = true;
-        dots[thisM + 1][thisN].redDetect = true;
+      //   dots[thisM - 1][thisN - 1].redDetect = true;
+      //   dots[thisM - 1][thisN + 1].redDetect = true;
+      //   dots[thisM + 1][thisN].redDetect = true;
 
-      } else if(rs0 < 6){        //////////////////////// MED Y
-        var rad = 5;
+      // } else
+      if(rs0 < 5){               //////////////////////// MED Y
+        var rad = 5;             //////////////////////// GLOWING RADIUS
         for(var x = -rad; x <= rad; x ++){
           var xAng = map(x, -rad, rad, 0, PI);
           var yWin = round(sin(xAng) * rad);
@@ -128,6 +129,14 @@ function generateRandom(){
         dots[thisM - 2][thisN + 2].redDetect = true;
         dots[thisM + 1][thisN].redDetect = true;
         dots[thisM + 2][thisN].redDetect = true;
+
+        dots[thisM - 2][thisN - 1].redDetect = true;        /////////// DOUBLED
+        dots[thisM][thisN + 1].redDetect = true; 
+        dots[thisM - 1][thisN].redDetect = true;
+        dots[thisM - 1][thisN + 2].redDetect = true;
+        dots[thisM - 2][thisN + 3].redDetect = true;
+        dots[thisM + 1][thisN + 1].redDetect = true;
+        dots[thisM + 2][thisN + 1].redDetect = true;
 
         dots[thisM - 1][thisN].greyDetect = true;
         dots[thisM - 2][thisN + 1].greyDetect = true;
@@ -147,13 +156,20 @@ function generateRandom(){
         dots[thisM - 2][thisN - 1].greyDetect = true;
 
       } else {                    //////////////////////// LARGE Y
-        var rad = 8;
+        var rad = 8;              //////////////////////// GLOWING RADIUS
         for(var x = -rad; x <= rad; x ++){
           var xAng = map(x, -rad, rad, 0, PI);
           var yWin = round(sin(xAng) * rad);
           for(var y = -yWin; y <= yWin; y++){
-            dots[thisM + y][thisN + x].greyGradient = true;
-            dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);
+            if(
+              thisM + y > 0 &&
+              thisM + y < yCount &&
+              thisN + x > 0 &&
+              thisN + x < xCount 
+            ) {
+              dots[thisM + y][thisN + x].greyGradient = true;
+              dots[thisM + y][thisN + x].greyValue = map(dist(0, 0, x, y), 0, rad, 100, 50);  
+            }
           }
 
         }
